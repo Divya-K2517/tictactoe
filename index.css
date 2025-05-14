@@ -1,0 +1,28 @@
+h1 {
+    color: green;
+    text-align: center;
+}
+p {
+    color: red;
+    
+}
+body {
+    display: flex;
+    flex-direction: column; /* stakcing components vertically */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    margin: 0;
+}
+.Board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    gap: 5px;
+}
+.Tile {
+    background-image: url("assets/Tile.jpeg");
+    background-size: cover;
+    background-position: center;
+    height: 100px;
+    width: 100px;
+}
