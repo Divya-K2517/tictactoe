@@ -24,7 +24,7 @@ class Tile {
         return this.spot;
     }
     isEmpty() {
-        return this.content === Tile.EMPTY;
+        return (this.content === Tile.EMPTY);
     }
     //resetting the tile
     clear() {
@@ -55,10 +55,10 @@ class Board {
         this.getTile(spot).setContent(Tile.X);
         //computer move
         if (!this.checkForWin() && !this.checkForDraw()) {
-            emptySpots = [];
+            const emptySpots = [];
             for (const tile of this.tiles) {
                 if (tile.isEmpty()) {
-                    emptySpots.push(i);
+                    emptySpots.push(tile.getSpot());
                 }
             }
             const chosenSpot = Math.floor(Math.random() * (emptySpots.length));
@@ -73,21 +73,23 @@ class Board {
         ]
         for (const pattern of winPatterns) {
             //three spots
-            a = pattern[0];
-            b = pattern[1];
-            c = pattern[2];
+            const a = pattern[0];
+            const b = pattern[1];
+            const c = pattern[2];
             //if spots match
             if (!this.tiles[a].isEmpty() &&
                 this.tiles[a].getContent() === this.tiles[b].getContent() &&
                 this.tiles[a].getContent() === this.tiles[c].getContent() ) {
+                    console.log("checked for win");
                     return this.tiles[a].getContent();
                 }
         }
+        console.log("checked for win");
         return null; //when no winner found
     }
     //checking for tie
     checkForDraw() {
-        for (const tile in this.tiles) {
+        for (const tile of this.tiles) {
             if (tile.isEmpty()) {
                 return false;
             }
