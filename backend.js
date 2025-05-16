@@ -33,6 +33,7 @@ class Tile {
 }
 class Board {
     tiles;
+    latestComputerMove; //keeps track of the last place that the computer made a move
     constructor () {
         this.tiles = [];
         //adding all tiles
@@ -63,9 +64,11 @@ class Board {
             }
             const chosenSpot = Math.floor(Math.random() * (emptySpots.length));
             this.getTile(chosenSpot).setContent(Tile.O);
+            this.latestComputerMove = chosenSpot
         }
     }
     checkForWin() {
+        console.log("checking for win");
         const winPatterns = [
             [0, 1, 2], [3, 4, 5], [6, 7, 8], //rows
             [0, 3, 6], [1, 4, 7], [2, 5, 8], //columns
@@ -80,11 +83,9 @@ class Board {
             if (!this.tiles[a].isEmpty() &&
                 this.tiles[a].getContent() === this.tiles[b].getContent() &&
                 this.tiles[a].getContent() === this.tiles[c].getContent() ) {
-                    console.log("checked for win");
                     return this.tiles[a].getContent();
                 }
         }
-        console.log("checked for win");
         return null; //when no winner found
     }
     //checking for tie
@@ -95,6 +96,17 @@ class Board {
             }
         }
         return (!this.checkForWin);
+    }
+    //returns string representation of the current board
+    stringBoard() {
+        let result = "";
+        for (let i = 0; i < 9; i++) {
+            result += this.tiles[i].getContent().toString();
+            if (i % 3 == 2) {
+                result += "\n"
+            }
+        }
+        return result;
     }
     //clearing board
     reset() {
