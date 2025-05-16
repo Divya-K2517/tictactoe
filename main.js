@@ -7,9 +7,11 @@ let gameBoard = new Board();
 ipcMain.handle('make-move', (event, spot) => {
     console.log('make move handler called with spot:', spot);
     gameBoard.makeMove(spot);
+    console.log("current board(remember 2 is x 1 is o):\n", gameBoard.stringBoard());
     const winner = gameBoard.checkForWin();
     const isDraw = gameBoard.checkForDraw();
-    return [winner, isDraw];
+    const computerMove = gameBoard.latestComputerMove;
+    return [winner, isDraw, computerMove];
 });
 ipcMain.handle('reset-game', () => {
     gameBoard.reset();
