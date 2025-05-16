@@ -51,7 +51,7 @@ class Board {
     //player is always X, computer is O
     makeMove(spot) {
         if (!this.isValidMove(spot)) {
-            //TODO: throw error or smth happens
+            throw new Error("This spot is not empty");
         }
         this.getTile(spot).setContent(Tile.X);
         //computer move
