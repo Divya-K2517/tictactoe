@@ -8,9 +8,9 @@ p {
 }
 body {
     display: flex;
-    flex-direction: column; /* stakcing components vertically */
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
     margin: 0;
 }
 .Board {
@@ -20,9 +20,10 @@ body {
     gap: 5px;
 }
 .Tile {
-    background-image: url("assets/Tile.jpeg");
+    background-image: url("assets/Tile.png");
     background-size: cover;
     background-position: center;
     height: 100px;
     width: 100px;
+    cursor: pointer;
 }
