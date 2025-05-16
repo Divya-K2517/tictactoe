@@ -10,8 +10,22 @@ document.querySelectorAll('.Tile').forEach(tile => {
       const spot = this.getAttribute('data-spot');
       console.log('Clicked spot:', spot);
       //using await bc ipdRenderer itself returns a Promise
-      const [a, b] =  await ipcRenderer.invoke('make-move', spot);
+      const [winner, draw, computerMove] =  await ipcRenderer.invoke('make-move', spot);
       //a is winner, and b is whether it is draw or not
-      console.log(a, b);
+      console.log("winner:", winner, "draw?", draw, "computer move: ", computerMove);
+      const contentElement = this.querySelector('.content'); //fine bc theres only one content class in each tile anyway
+      if (winner == null && !draw) {
+        this.style.backgroundImage = "url(assets/X.png)";
+        
+        markComputerMove(computerMove);
+      }
     });
   });
+//marking the move that the computer made with an O
+function markComputerMove(computerMove) {
+    document.querySelectorAll(".Tile").forEach(tile => {
+        if (tile.getAttribute('data-spot') == computerMove) {
+            tile.style.backgroundImage = "url(assets/O.jpeg)";
+        }
+    });
+}
