@@ -11,13 +11,16 @@ document.querySelectorAll('.Tile').forEach(tile => {
       console.log('Clicked spot:', spot);
       //using await bc ipdRenderer itself returns a Promise
       const [winner, draw, computerMove] =  await ipcRenderer.invoke('make-move', spot);
-      //a is winner, and b is whether it is draw or not
-      console.log("winner:", winner, "draw?", draw, "computer move: ", computerMove);
-      const contentElement = this.querySelector('.content'); //fine bc theres only one content class in each tile anyway
-      if (winner == null && !draw) {
+       //if the user clicked on a spot that was not empty and an error was thrown 
+      if (winner == 9 && draw == 9 && computerMove == 9) {
+        showErrorMessage();
+      } else {
+        //a is winner, and b is whether it is draw or not
+        console.log("winner:", winner, "draw?", draw, "computer move: ", computerMove);
         this.style.backgroundImage = "url(assets/X.png)";
-        
-        markComputerMove(computerMove);
+        if (winner == null && !draw) {
+            markComputerMove(computerMove);
+        }
       }
     });
   });
@@ -28,4 +31,10 @@ function markComputerMove(computerMove) {
             tile.style.backgroundImage = "url(assets/O.jpeg)";
         }
     });
+}
+//showing an error message
+function showErrorMessage() {
+    console.log("showErrorMessage called");
+    let errorElement = document.querySelector(".Error");
+    errorElement.style.visibility = "visible";
 }
