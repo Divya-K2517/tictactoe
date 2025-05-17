@@ -49,22 +49,52 @@ class Board {
         return (this.getTile(spot).isEmpty());
     }
     //player is always X, computer is O
+    //make move will automaticlly make the computer move after it
     makeMove(spot) {
         if (!this.isValidMove(spot)) {
             throw new Error("This spot is not empty");
         }
         this.getTile(spot).setContent(Tile.X);
-        //computer move
-        if (!this.checkForWin() && !this.checkForDraw()) {
-            const emptySpots = [];
+        this.computerMove()
+    }
+    computerMove() {
+        const emptySpots = [];
             for (const tile of this.tiles) {
                 if (tile.isEmpty()) {
                     emptySpots.push(tile.getSpot());
                 }
             }
+        //creating a copy of the current board
+        let boardCopy = new Board();
+        boardCopy.tiles = this.tiles.map(tile => {
+            let newTile = new Tile(tile.getSpot());
+            newTile.setContent(tile.getContent());
+            return newTile;
+        });
+        let moveMade = false;
+        //blocking any possible wins the user has
+        for (const spot of emptySpots) {
+            boardCopy.getTile(spot).setContent(Tile.X);
+            if (boardCopy.checkForWin() == Tile.X) { //if the user will win
+                this.getTile(spot).setContent(Tile.O);
+                this.latestComputerMove = spot;
+                moveMade = true;
+                return;
+            } 
+            boardCopy.getTile(spot).setContent(Tile.O);
+            if (boardCopy.checkForWin() == Tile.O) { //if the computer will win
+                this.getTile(spot).setContent(Tile.O);
+                this.latestComputerMove = spot;
+                moveMade = true
+                return;
+            } 
+            boardCopy.getTile(spot).setContent(Tile.EMPTY); //resetting the current spot
+        }
+        if (!moveMade) { //if no move found, choose randomly
             const chosenSpot = Math.floor(Math.random() * (emptySpots.length));
             this.getTile(chosenSpot).setContent(Tile.O);
-            this.latestComputerMove = chosenSpot
+            this.latestComputerMove = chosenSpot;
+            return;
         }
     }
     checkForWin() {
