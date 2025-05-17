@@ -15,15 +15,19 @@ document.querySelectorAll('.Tile').forEach(tile => {
       if (winner == 9 && draw == 9 && computerMove == 9) {
         showErrorMessage();
       } else {
-        //a is winner, and b is whether it is draw or not
         console.log("winner:", winner, "draw?", draw, "computer move: ", computerMove);
         this.style.backgroundImage = "url(assets/X.png)";
-        if (winner == null && !draw) {
+        if (winner != 2 && !draw) {
             markComputerMove(computerMove);
         }
       }
     });
   });
+document.querySelectorAll('.Error').forEach(errMessage => {
+    errMessage.addEventListener('click', async function() {
+        this.style.visibility = "hidden";
+    });
+});
 //marking the move that the computer made with an O
 function markComputerMove(computerMove) {
     document.querySelectorAll(".Tile").forEach(tile => {
