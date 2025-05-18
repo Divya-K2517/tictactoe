@@ -61,6 +61,7 @@ class Board {
                     emptySpots.push(tile.getSpot());
                 }
             }
+        if (emptySpots.length === 0) {return;} //if no spots open return
         //creating a copy of the current board
         let boardCopy = new Board();
         boardCopy.tiles = this.tiles.map(tile => {
@@ -123,7 +124,7 @@ class Board {
                 return false;
             }
         }
-        return (!this.checkForWin);
+        return (!this.checkForWin());
     }
     //returns string representation of the current board
     stringBoard() {
