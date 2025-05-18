@@ -21,7 +21,12 @@ ipcMain.handle('make-move', (event, spot) => {
 ipcMain.handle('reset-game', () => {
     gameBoard.reset();
     board = gameBoard.tiles.map(tile => tile.getContent());
+    console.log("game is reset");
     return board;
+    //board is an array containing the current content of the board
+    //it should be all 0's like this: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    //0 is empty 1 is O and 2 is X
+
 });
 //creteWindow lods the webpage into a BrowserWindow instance
 function createWindow () {
