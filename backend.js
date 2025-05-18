@@ -16,9 +16,7 @@ class Tile {
         return this.content;
     }
     setContent(value) {
-        //TODO: add input validation
         this.content = value;
-        
     }
     getSpot () {
         return this.spot;
@@ -42,7 +40,6 @@ class Board {
         }
     }
     getTile(spot) {
-        //TODO: add input validation
         return this.tiles[spot];
     }
     isValidMove(spot) {
@@ -91,7 +88,8 @@ class Board {
             boardCopy.getTile(spot).setContent(Tile.EMPTY); //resetting the current spot
         }
         if (!moveMade) { //if no move found, choose randomly
-            const chosenSpot = Math.floor(Math.random() * (emptySpots.length));
+            const chosenIndex = Math.floor(Math.random() * (emptySpots.length));
+            const chosenSpot = emptySpots[chosenIndex];
             this.getTile(chosenSpot).setContent(Tile.O);
             this.latestComputerMove = chosenSpot;
             return;
