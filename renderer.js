@@ -28,6 +28,15 @@ document.querySelectorAll('.Error').forEach(errMessage => {
         this.style.visibility = "hidden";
     });
 });
+document.querySelectorAll('.Reset').forEach(resetButton => {
+    resetButton.addEventListener('click', async function() {
+        const boardState = await ipcRenderer.invoke('reset-game');
+        document.querySelectorAll('.Tile').forEach((tile, index) => {
+            const content = boardState[index];
+            tile.style.backgroundImage = content === 0 ? "url(assets/Tile.png)" : (content === 1 ? "url(assets/O.png)" : "url(assets/X.png)");
+        });
+    });
+});
 //marking the move that the computer made with an O
 function markComputerMove(computerMove) {
     document.querySelectorAll(".Tile").forEach(tile => {
