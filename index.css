@@ -36,6 +36,14 @@ body {
     width: 20%;
     top: 30%;
     left: 40%;
-
-
+}
+.Reset {
+    position: absolute;
+    background-image: url("assets/Reset.png");
+    background-size: cover;
+    height: 10%;
+    width: 15%;
+    top: 85%;
+    left: 80%;
+    outline: auto;
 }
