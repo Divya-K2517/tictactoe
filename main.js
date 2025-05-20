@@ -8,15 +8,13 @@ ipcMain.handle('make-move', (event, spot) => {
     console.log('make move handler called with spot:', spot);
     try {
         gameBoard.makeMove(spot);
-        console.log("current board(remember 2 is x 1 is o):\n", gameBoard.stringBoard());
         const [winner, winType] = gameBoard.checkForWin();
-        console.log("winner and wintype: ", winner, winType);
         const isDraw = gameBoard.checkForDraw();
         const computerMove = gameBoard.latestComputerMove;
-        console.log("returned: ", winner, isDraw, computerMove, winType);
         return [winner, isDraw, computerMove, winType];
     } catch (Error) {
         console.error("error message: ", Error.message);
+        console.error("error stack: ", Error.stack)
         return [9, 9, 9, 9];
     }
     
