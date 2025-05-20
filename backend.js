@@ -39,7 +39,6 @@ class Board {
         for (let i = 0; i < 9; i++) {
             this.tiles.push(new Tile(i))
         }
-        console.log(this.tiles);
     }
     getTile(spot) {
         return this.tiles[spot];
@@ -56,11 +55,16 @@ class Board {
         }
         if (this.gameInPlay) {
             this.getTile(spot).setContent(Tile.X);
-            this.computerMove()
+            //checking if the user won before allowing the computer to make a move
+            const [winner, winType] = this.checkForWin();
+            if (!winner && this.gameInPlay) {
+                this.computerMove();
+            }
         }
 
     }
     computerMove() {
+        console.log("computer making its move");
         const emptySpots = [];
             for (const tile of this.tiles) {
                 if (tile.isEmpty()) {
@@ -103,7 +107,6 @@ class Board {
         }
     }
     checkForWin() {
-        console.log("checking for win");
         const winPatterns = [
             [0, 1, 2], [3, 4, 5], [6, 7, 8], //rows
             [0, 3, 6], [1, 4, 7], [2, 5, 8], //columns
