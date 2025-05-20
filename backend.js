@@ -32,27 +32,33 @@ class Tile {
 class Board {
     tiles;
     latestComputerMove; //keeps track of the last place that the computer made a move
+    gameInPlay = true;
     constructor () {
         this.tiles = [];
         //adding all tiles
         for (let i = 0; i < 9; i++) {
             this.tiles.push(new Tile(i))
         }
+        console.log(this.tiles);
     }
     getTile(spot) {
         return this.tiles[spot];
     }
     isValidMove(spot) {
-        return (this.getTile(spot).isEmpty());
+        return (this.gameInPlay && this.getTile(spot).isEmpty());
     }
     //player is always X, computer is O
     //make move will automaticlly make the computer move after it
     makeMove(spot) {
-        if (!this.isValidMove(spot)) {
+        if (!this.isValidMove(spot) && (this.gameInPlay)) { //if the game is not in play another messge about the winner will already be on the screen
+            console.log("not a valid move: ", this.isValidMove(spot), this.gameInPlay);
             throw new Error("This spot is not empty");
         }
-        this.getTile(spot).setContent(Tile.X);
-        this.computerMove()
+        if (this.gameInPlay) {
+            this.getTile(spot).setContent(Tile.X);
+            this.computerMove()
+        }
+
     }
     computerMove() {
         const emptySpots = [];
@@ -103,16 +109,21 @@ class Board {
             [0, 3, 6], [1, 4, 7], [2, 5, 8], //columns
             [0, 4, 8], [2, 4, 6] //diagonals
         ]
+        //
         for (const pattern of winPatterns) {
             //three spots
             const a = pattern[0];
             const b = pattern[1];
             const c = pattern[2];
-            //if spots match
+            //for the winType to be returned:
+            //1,2,3 are the rows top to bottom, 4, 5, 6 are the columns left to right
+            //7 is left diagonal, 8 is right diagonal
             if (!this.tiles[a].isEmpty() &&
                 this.tiles[a].getContent() === this.tiles[b].getContent() &&
                 this.tiles[a].getContent() === this.tiles[c].getContent() ) {
-                    return this.tiles[a].getContent();
+                    this.gameInPlay = false;
+                    let winType = winPatterns.indexOf(pattern) + 1;
+                    return [this.tiles[a].getContent(), winType];
                 }
         }
         return null; //when no winner found
@@ -139,6 +150,7 @@ class Board {
     }
     //clearing board
     reset() {
+        this.gameInPlay = true;
         this.tiles.forEach(tile => tile.clear());
     }
 }
