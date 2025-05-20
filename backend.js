@@ -126,7 +126,7 @@ class Board {
                     return [this.tiles[a].getContent(), winType];
                 }
         }
-        return null; //when no winner found
+        return [null, null]; //when no winner found
     }
     //checking for tie
     checkForDraw() {
