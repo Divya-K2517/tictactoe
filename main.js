@@ -9,12 +9,15 @@ ipcMain.handle('make-move', (event, spot) => {
     try {
         gameBoard.makeMove(spot);
         console.log("current board(remember 2 is x 1 is o):\n", gameBoard.stringBoard());
-        const winner = gameBoard.checkForWin();
+        const [winner, winType] = gameBoard.checkForWin();
+        console.log("winner and wintype: ", winner, winType);
         const isDraw = gameBoard.checkForDraw();
         const computerMove = gameBoard.latestComputerMove;
-        return [winner, isDraw, computerMove];
+        console.log("returned: ", winner, isDraw, computerMove, winType);
+        return [winner, isDraw, computerMove, winType];
     } catch (Error) {
-        return [9, 9, 9];
+        console.error("error message: ", Error.message);
+        return [9, 9, 9, 9];
     }
     
 });
