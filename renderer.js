@@ -22,7 +22,10 @@ document.querySelectorAll('.Tile').forEach(tile => {
             console.log("winner:", winner, "draw?", draw, "computer move: ", computerMove);
             this.style.backgroundImage = "url(assets/X.png)";
             if (winner != 2 && !draw) {
-                markComputerMove(computerMove);
+                //delaying the computer move by 0.5 secs
+                setTimeout(() => {
+                    markComputerMove(computerMove);
+                }, 500);
             }
             if (winner == 2) {
                 //show user winner message
