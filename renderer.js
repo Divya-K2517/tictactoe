@@ -31,14 +31,26 @@ document.querySelectorAll('.Tile').forEach(tile => {
                 //show user winner message
                 gameInPlay = false;
                 let userWinElement = document.querySelector('.userWin');
-                userWinElement.style.visibility = "visible";
-                markWinLine(winType);
+                setTimeout(() => {
+                    userWinElement.style.visibility = "visible";
+                    markWinLine(winType);
+                }, 500);
+                
             } else if (winner == 1) {
                 //show computer winner message
                 gameInPlay = false;
                 let computerWinElement = document.querySelector('.computerWin');
-                computerWinElement.style.visibility = "visible";
-                markWinLine(winType);
+                setTimeout(() => {
+                    computerWinElement.style.visibility = "visible";
+                    markWinLine(winType);
+                }, 500);
+                
+            } else if (draw) {
+                gameInPlay = false;
+                let drawElement = document.querySelector('.draw');
+                setTimeout(() => {
+                    drawElement.style.visibility = "visible";
+                }, 500);
             }
         }
       }
@@ -63,7 +75,12 @@ document.querySelectorAll('.Reset').forEach(resetButton => {
         userWinElement.style.visibility = "hidden";
         let computerWinElement = document.querySelector('.computerWin');
         computerWinElement.style.visibility = "hidden";
-        document.querySelector(".Line").style.visibility = "hidden";
+        let winLineElement = document.querySelector(".Line");
+        winLineElement.style.visibility = "hidden";
+        //resetting win line settings
+        winLineElement.style.top = "15%";
+        winLineElement.style.left = "0%";
+        winLineElement.style.width = "100%";
     });
 });
 //making a line across the win
