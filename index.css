@@ -79,6 +79,17 @@ body {
     top: 30%;
     left: 5%;
 }
+.draw {
+    position: absolute;
+    background-image: url("assets/draw.png");
+    visibility: hidden;
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 25%;
+    width: 25%;
+    top: 30%;
+    left: 5%;
+}
 .Line { 
     pointer-events: none;
     position: absolute;
