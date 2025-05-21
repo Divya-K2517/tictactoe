@@ -138,7 +138,8 @@ class Board {
                 return false;
             }
         }
-        return (!this.checkForWin());
+        const [winner, winType] = this.checkForWin();
+        return (winner == null);
     }
     //returns string representation of the current board
     stringBoard() {
