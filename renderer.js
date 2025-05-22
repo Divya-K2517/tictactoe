@@ -2,6 +2,8 @@
 //tile color: F8DAEC
 const{ ipcRenderer } = require ('electron');
 let gameInPlay = true;
+//storing the IDs of each timeout
+let pendingTimeouts = [];
 //will receive messages from main process
 ipcRenderer.on('message', (event, message) => {
     console.log(message); //printing message to console
@@ -31,26 +33,29 @@ document.querySelectorAll('.Tile').forEach(tile => {
                 //show user winner message
                 gameInPlay = false;
                 let userWinElement = document.querySelector('.userWin');
-                setTimeout(() => {
+                const timeOutID = setTimeout(() => {
                     userWinElement.style.visibility = "visible";
                     markWinLine(winType);
                 }, 500);
+                pendingTimeouts.push(timeOutID);
                 
             } else if (winner == 1) {
                 //show computer winner message
                 gameInPlay = false;
                 let computerWinElement = document.querySelector('.computerWin');
-                setTimeout(() => {
+                const timeOutID = setTimeout(() => {
                     computerWinElement.style.visibility = "visible";
                     markWinLine(winType);
                 }, 500);
+                pendingTimeouts.push(timeOutID);
                 
             } else if (draw) {
                 gameInPlay = false;
                 let drawElement = document.querySelector('.draw');
-                setTimeout(() => {
+                const timeOutID = setTimeout(() => {
                     drawElement.style.visibility = "visible";
                 }, 500);
+                pendingTimeouts.push(timeOutID);
             }
         }
       }
@@ -63,6 +68,10 @@ document.querySelectorAll('.Error').forEach(errMessage => {
 });
 document.querySelectorAll('.Reset').forEach(resetButton => {
     resetButton.addEventListener('click', async function() {
+        //clearing all pending timeouts
+        pendingTimeouts.forEach(clearTimeout);
+        pendingTimeouts = [];
+        
         const boardState = await ipcRenderer.invoke('reset-game');
         document.querySelectorAll('.Tile').forEach((tile, index) => {
             const content = boardState[index];
@@ -70,17 +79,21 @@ document.querySelectorAll('.Reset').forEach(resetButton => {
         });
         gameInPlay = true;
         
-        //hiding both win elements and the line
+        //hiding both win elements, the draw message, and the line
         let userWinElement = document.querySelector('.userWin');
         userWinElement.style.visibility = "hidden";
         let computerWinElement = document.querySelector('.computerWin');
         computerWinElement.style.visibility = "hidden";
+        let drawElement = document.querySelector('.draw');
+        drawElement.style.visibility = "hidden";
         let winLineElement = document.querySelector(".Line");
         winLineElement.style.visibility = "hidden";
         //resetting win line settings
         winLineElement.style.top = "15%";
         winLineElement.style.left = "0%";
         winLineElement.style.width = "100%";
+        winLineElement.style.transformOrigin = "";
+        winLineElement.style.transform = "none";
     });
 });
 //making a line across the win
