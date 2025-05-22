@@ -1,5 +1,9 @@
 # TicTacToe Desktop Game
 
+<div align="left">
+  <img src="./game-demo.gif" alt="Game Demo" width="500"/>
+</div>
+
 **Description:**  
 Tic Tac Toe against the computer!
 
