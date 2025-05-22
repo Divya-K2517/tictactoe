@@ -14,3 +14,4 @@ Electron, Node.js, Javascript, HTML/CSS
 * Windows 10/11 or macOS 11+
 * The user is X and the computer is O
 * Press the restart button in the bottom right to start a new game
+
